@@ -1,32 +1,35 @@
 import axios from 'axios';
 
+type IRequestHeaders = {
+    appToken: string;
+    accessToken: string;
+}
+
+interface IRequest {
+    url: string;
+    headers: IRequestHeaders;
+    params: {};
+}
 export abstract class BaseEntity {
-    public url: string;
-    public app_token: string;
-    public access_token: string;
 
-    public async request(params = {}) {
-        const headers = {
-            'Content-Type': 'application/json',
-            'app_token': this.app_token,
-            'access_token': this.access_token
-        }
-
+    static async request({
+        url,
+        headers,
+        params }: IRequest) {
         try {
-            const response = await axios.get(this.url, {
-                headers,
+            const response = await axios.get(url, {
+                headers: {
+                    app_token: headers.appToken,
+                    access_token: headers.accessToken,
+                    'Content-Type': 'application/json'
+                },
                 params
             })
 
             return response.data;
         } catch (error) {
-            return new Error(JSON.stringify(error))
+            const errorMessage = { message: error }
+            return new Error(JSON.stringify(errorMessage))
         }
-    };
-
-    constructor(url: string, appToken: string, accessToken: string) {
-        this.url = url;
-        this.app_token = appToken;
-        this.access_token = accessToken;
     };
 };

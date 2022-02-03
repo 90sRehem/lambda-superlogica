@@ -1,7 +1,15 @@
 export const schema = {
   type: "object",
   properties: {
-    name: { type: 'string' }
+    url: { type: 'string' },
+    headers: {
+      type: "object",
+      properties: {
+        appToken: { type: 'string' },
+        accessToken: { type: 'string' },
+      },
+    },
+    params: { type: "object" }
   },
-  required: ['name']
+  required: ['url', 'headers']
 } as const;
