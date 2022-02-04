@@ -10,8 +10,8 @@ interface IRequest {
     headers: IRequestHeaders;
     params: {};
 }
-export abstract class BaseEntity {
 
+export abstract class BaseEntity {
     static async request({
         url,
         headers,

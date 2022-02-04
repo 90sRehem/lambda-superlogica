@@ -4,7 +4,7 @@ import { middyfy } from '@libs/lambda';
 import { SuperLogicaAPIConsumer } from 'src/entities/SuperLogicaAPIConsumer';
 import { schema } from './schema';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const handler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   const response = await SuperLogicaAPIConsumer.request({
     url: event.body.url,
     headers: {
@@ -13,7 +13,6 @@ const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) =
     },
     params: event.body.params
   })
-  console.log(event.headers);
 
   return formatJSONResponse({
     message: "success",
@@ -21,4 +20,4 @@ const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) =
   });
 };
 
-export const main = middyfy(hello);
+export const main = middyfy(handler);
