@@ -1,24 +1,26 @@
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
+import { Go2GoConsumerAPIConsumer } from 'src/entities/Go2GoConsumerConsumer';
 import { SuperLogicaAPIConsumer } from 'src/entities/SuperLogicaAPIConsumer';
 import { schema } from './schema';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
-  const response = await SuperLogicaAPIConsumer.request({
-    url: event.body.url,
-    headers: {
-      accessToken: event.headers.access_token,
-      appToken: event.headers.app_token,
-    },
-    params: event.body.params
-  })
-  console.log(event.headers);
+const superLogicaAPIConsumer = new SuperLogicaAPIConsumer()
+const go2goAPIConsumer = new Go2GoConsumerAPIConsumer()
 
-  return formatJSONResponse({
-    message: "success",
-    payload: response
-  });
+const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+  try {
+    // const response = await superLogicaAPIConsumer.getActiveClients();
+    // const response = await superLogicaAPIConsumer.insertCharge();
+
+    return formatJSONResponse({
+      message: "success",
+      // payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
 };
 
 export const main = middyfy(hello);
