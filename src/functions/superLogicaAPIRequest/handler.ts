@@ -8,7 +8,7 @@ import { schema } from './schema';
 const superLogicaAPIConsumer = new SuperLogicaAPIConsumer()
 const go2goAPIConsumer = new Go2GoConsumerAPIConsumer()
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
+const handler: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   try {
     // const response = await superLogicaAPIConsumer.getActiveClients();
     // const response = await superLogicaAPIConsumer.insertCharge();
@@ -23,4 +23,4 @@ const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) =
 
 };
 
-export const main = middyfy(hello);
+export const main = middyfy(handler);

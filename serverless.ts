@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import { superLogicaAPIRequestFn } from '@functions/superLogicaAPIRequest.ts';
+import { superLogicaAPIRequestFn } from '@functions/superLogicaAPIRequest';
 
 const serverlessConfiguration: AWS = {
   service: 'lambda-superlogica',

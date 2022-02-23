@@ -1,1 +1,1 @@
-export * from './superLogicaAPIRequest.ts';
+export * from './superLogicaAPIRequest';
